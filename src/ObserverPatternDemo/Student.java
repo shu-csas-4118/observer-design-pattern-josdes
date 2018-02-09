@@ -7,6 +7,7 @@ public class Student {
 	private String lastName;
 	private String email;
 	private int idNumber;
+	private ArrayList<Course> courseList;
 	private ArrayList<IObserver> observers;
 	
 	public Student(String firstName, String lastName, int idNumber, String email) {
@@ -14,10 +15,12 @@ public class Student {
 		this.lastName = lastName;
 		this.idNumber = idNumber;
 		this.email = email;
+		this.courseList = new ArrayList<Course>();
 		this.observers = new ArrayList<IObserver>();
 	}
 	
 	public Student() {
+		this.courseList = new ArrayList<Course>();
 		this.observers = new ArrayList<IObserver>();
 	}
 	
@@ -27,7 +30,7 @@ public class Student {
 	
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
-		notifyAllObservers();
+		notifyAllObservers("name");
 	}
 	
 	public String getLastName() {
@@ -44,12 +47,12 @@ public class Student {
 	
 	public void setIdNumber(int idNumber) {
 		this.idNumber = idNumber;
-		notifyAllObservers();
+		notifyAllObservers("id");
 	}	
 	
 	public void setEmail(String email) {
 		this.email = email;
-		notifyAllObservers();
+		notifyAllObservers("email");
 	}
 	
 	public String getEmail() {
@@ -60,10 +63,21 @@ public class Student {
 		this.observers.add(observer);
 	}
 	
-	public void notifyAllObservers() {
+	public void notifyAllObservers(String type) {
 		for(IObserver observer: this.observers) {
-			observer.update(this);
+			if(type == observer.returnType()) {
+				observer.update(this);
+			}
 		}
+	}
+
+	public ArrayList<Course> getCourses() {
+		return courseList;
+	}
+
+	public void setCourses(ArrayList<Course> courseList) {
+		this.courseList = courseList;
+		notifyAllObservers("course");
 	}
 	
 	

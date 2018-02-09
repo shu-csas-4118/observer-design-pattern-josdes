@@ -7,6 +7,10 @@ public class FirstNameObserver implements IObserver {
 		
 	}
 	
+	public String returnType() {
+		return "name";
+	}
+	
 	public void update(Student student) {		
 		System.out.println("Student's first name is " + student.getFirstName());
 	}
